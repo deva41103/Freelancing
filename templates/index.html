@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancing Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-poppins">
+    <header class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center fixed w-full top-0 z-50">
+        <h1 class="text-2xl font-bold">FREELANCING HUB</h1>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="#home" class="hover:text-yellow-400">Home</a></li>
+                <li><a href="#features" class="hover:text-yellow-400">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-yellow-400">How It Works</a></li>
+                <li><a href="#contact" class="hover:text-yellow-400">Contact</a></li>
+                <li><button class="btnLogin-popup bg-yellow-500 px-4 py-2 rounded-lg">Login</button></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="h-screen flex items-center justify-center text-center text-white bg-cover bg-center relative" style="background-image: url('https://source.unsplash.com/1600x900/?freelance,work');">
+        <div class="bg-black bg-opacity-50 p-10 rounded-lg">
+            <h1 class="text-4xl font-bold">Find the Best Freelancers for <span class="text-yellow-400">Your Projects</span></h1>
+            <p class="mt-4 text-lg">Join thousands of clients and freelancers collaborating efficiently.</p>
+            <a href="#choice" class="mt-6 inline-block bg-yellow-500 text-white px-6 py-3 rounded-lg">Get Started</a>
+        </div>
+    </section>
+    
+    <section id="choice" class="text-center py-16 hidden">
+        <h2 class="text-3xl font-bold mb-6">Join as a Client or Freelancer</h2>
+        <a href="{{ url_for('client_signup') }}" class="bg-gray-900 text-white px-6 py-3 rounded-lg mx-2">Client Sign Up</a>
+        <a href="{{ url_for('client_login') }}" class="bg-gray-900 text-white px-6 py-3 rounded-lg mx-2">Client Login</a>
+        <a href="{{ url_for('freelancer_signup') }}" class="bg-gray-900 text-white px-6 py-3 rounded-lg mx-2">Freelancer Sign Up</a>
+        <a href="{{ url_for('freelancer_login') }}" class="bg-gray-900 text-white px-6 py-3 rounded-lg mx-2">Freelancer Login</a>
+    </section>
+    
+    <footer id="contact" class="bg-gray-900 text-white text-center py-6">
+        <p>&copy; 2024 Freelancer Hub. DevaDish Brotherhood.</p>
+        <div class="flex justify-center space-x-4 mt-2">
+            <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const loginButton = document.querySelector(".btnLogin-popup");
+    const getStartedButton = document.querySelector("a[href='#choice']"); 
+    const choiceBox = document.querySelector("#choice");
+
+    // Toggle choice section when "Login" button is clicked
+    loginButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        choiceBox.classList.toggle("hidden");
+    });
+
+    // Show choice section when "Get Started" button is clicked
+    getStartedButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        choiceBox.classList.remove("hidden");
+        choiceBox.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to choice section
+    });
+
+    // Hide choice section when clicking outside
+    document.addEventListener("click", function(event) {
+        if (!choiceBox.contains(event.target) && !loginButton.contains(event.target) && !getStartedButton.contains(event.target)) {
+            choiceBox.classList.add("hidden");
+        }
+    });
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bid on Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100 flex h-screen">
+    
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-700">Bid on a Project</h2>
+        <nav class="mt-6">
+            <ul class="space-y-4">
+                <li>
+                    <a href="{{ url_for('freelancer_dashboard') }}" class="flex items-center space-x-3 text-gray-600 hover:text-yellow-500">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('logout') }}" class="flex items-center space-x-3 text-red-500 hover:text-red-700">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <h2 class="text-2xl font-bold text-gray-700 mb-6">Available Projects</h2>
+        
+        {% if projects %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead class="bg-yellow-500 text-white">
+                        <tr>
+                            <th class="py-3 px-6 text-left">Client Username</th>
+                            <th class="py-3 px-6 text-left">Project Name</th>
+                            <th class="py-3 px-6 text-left">Project Type</th>
+                            <th class="py-3 px-6 text-left">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for project in projects %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6">{{ project.client_username }}</td>
+                                <td class="py-4 px-6">{{ project.proj_name }}</td>
+                                <td class="py-4 px-6">{{ project.proj_type }}</td>
+                                <td class="py-4 px-6">
+                                    <form action="{{ url_for('bid_on_project') }}" method="POST" class="space-y-2">
+                                        <input type="hidden" name="proj_id" value="{{ project.id }}">  <!-- Add this line -->
+                                        <input type="hidden" name="client_username" value="{{ project.client_username }}">
+                                        <input type="hidden" name="proj_name" value="{{ project.proj_name }}">
+                                    
+                                        <div class="relative">
+                                            <input type="number" name="bid_amount" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-yellow-500" placeholder="Bid Amount">
+                                        </div>
+                                    
+                                        <div class="relative">
+                                            <textarea name="proposal" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-yellow-500" placeholder="Proposal"></textarea>
+                                        </div>
+                                    
+                                        <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600">Submit Bid</button>
+                                    </form>
+                                    
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-gray-600">No projects available for bidding at the moment.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
